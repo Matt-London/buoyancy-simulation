@@ -1,0 +1,1 @@
+let test = new Block(100, 100, 100, 100, 0, "green", document.body);
