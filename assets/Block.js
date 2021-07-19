@@ -1,10 +1,15 @@
 class Block {
     // ====================== Constructors ======================
-    constructor(height, width, left, top, weight, color, parent, rigid, gravity, mobile) {
+    constructor(height, width, left, top, mass, volume, image, color, parent, rigid, gravity, mobile) {
         this.height = parseInt(height);
         this.width = parseInt(width);
-        this.weight = parseInt(weight);
+        this.mass = parseInt(mass);
+        this.volume = parseInt(volume);
+        this.density = parseFloat(mass / 1.0 / volume);
         this.color = color;
+        this.image = image;
+
+        this.loadTotal = 0;
 
         this.rigid = rigid;
         this.mobile = mobile;
@@ -32,10 +37,6 @@ class Block {
         
         this.build();
 
-        // // Add event listener for click to update position
-        // this.div.addEventListener('click', () => {
-        //     this.update();
-        // });
     }
 
     // ====================== Getters ======================
@@ -72,7 +73,9 @@ class Block {
         this.update();
     }
     set_color(c) {
-        this.color = c;
+        if (!this.image) {
+            this.color = c;
+        }
         this.update();
     }
     set_left(l) {
@@ -88,7 +91,9 @@ class Block {
     update(dt) {
         this.div.style.height = this.height + "px";
         this.div.style.width = this.width + "px";
-        this.div.style.backgroundColor = this.color;
+        if (!this.image) {
+            this.div.style.backgroundColor = this.color;
+        }
         this.top = parseInt(this.div.style.top.slice(0, this.div.style.top.length - 2));
         this.left = parseInt(this.div.style.left.slice(0, this.div.style.left.length - 2));
         this.bottom = this.top + this.height;
@@ -103,6 +108,16 @@ class Block {
     build() {
         if (this.mobile) {
             this.div.style.cursor = "pointer";
+        }
+
+        if (this.image) {
+            this.img = document.createElement('img');
+            this.img.src = this.color;
+            this.img.alt = "Image of material";
+            this.img.style.height = this.height;
+            this.img.style.width = this.width;
+            this.img.style.pointerEvents = "none";
+            this.div.appendChild(this.img);
         }
 
         this.div.style.position = "absolute";
@@ -137,6 +152,24 @@ class Block {
         if (!this.collision && this.has_gravity) {
             this.gravity(dt);
         }
+    }
+
+    // Updates weightotal with total weight above
+    update_load() {
+        let total_load = 0;
+        let collideBlock = specific_collision(this);
+        if (collideBlock) {
+            console.log("ran");
+            let collideBlock = specific_collision(this);
+            total_load += collideBlock.weight + collideBlock.update_load();
+
+        }
+        else {
+            return 0;
+        }
+        this.loadTotal = total_load;
+        return total_load;
+
     }
 
 }
