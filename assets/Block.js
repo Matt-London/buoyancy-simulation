@@ -1,6 +1,6 @@
 class Block {
     // ====================== Constructors ======================
-    constructor(height, width, left, top, mass, volume, image, color, parent, rigid, gravity, mobile) {
+    constructor(height, width, left, top, mass, volume, image, color, parent, rigid, gravity, mobile, displayable) {
         this.height = parseInt(height);
         this.width = parseInt(width);
         this.mass = parseInt(mass);
@@ -8,6 +8,10 @@ class Block {
         this.density = parseFloat(mass / 1.0 / volume);
         this.color = color;
         this.image = image;
+
+        this.displayable = displayable;
+
+        this.weight = mass;
 
         this.loadTotal = 0;
 
@@ -30,6 +34,11 @@ class Block {
         this.collision = false;
 
         this.div = document.createElement("div");
+
+        this.display = document.createElement("div");
+        this.display.className = "display";
+        this.display.style.pointerEvents = "none";
+        this.div.appendChild(this.display);
 
         if (this.mobile) {
             dragElement(this.div);
@@ -101,6 +110,12 @@ class Block {
 
         this.update_position(dt);
 
+        this.loadTotal = this.update_load();
+
+        this.update_weight();
+
+        this.update_visible();
+
         
     }
 
@@ -126,6 +141,11 @@ class Block {
         this.div.style.left = this.left + "px";
         this.update(time_elapsed());
         this.parent.appendChild(this.div);
+    }
+
+    // Calculates the weight of the block
+    update_weight() {
+        this.weight = this.mass;
     }
 
     // Apply gravity by calculating change in position
@@ -156,10 +176,12 @@ class Block {
 
     // Updates weightotal with total weight above
     update_load() {
+        if (!load_ready) {
+            return 0;
+        }
         let total_load = 0;
         let collideBlock = specific_collision(this);
         if (collideBlock) {
-            console.log("ran");
             let collideBlock = specific_collision(this);
             total_load += collideBlock.weight + collideBlock.update_load();
 
@@ -170,6 +192,27 @@ class Block {
         this.loadTotal = total_load;
         return total_load;
 
+    }
+
+    // Updates with what values need to be visible
+    update_visible() {
+        if (this.displayable) {
+            let info = "";
+            if (show_mass) {
+                info += this.mass + " kg<br>";
+            }
+            if (show_volume) {
+                info += this.volume + " m^3<br>";
+            }
+            if (show_weight) {
+                info += this.weight + " N<br>";
+            }
+            if (show_density) {
+                info += this.density + " kg/m^3";
+            }
+
+            this.display.innerHTML = info;
+        }
     }
 
 }

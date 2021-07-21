@@ -1,7 +1,7 @@
 class Scale extends Block {
     constructor(height, width, left, top, parent) {
         // Call super
-        super(height, width, left, top, 50, 10, false, "none", parent, true, true, true);
+        super(height, width, left, top, 50, 10, false, "none", parent, true, true, true, true);
 
         this.height = height;
         this.width = width;
@@ -10,7 +10,7 @@ class Scale extends Block {
 
         this.div.className = "scale";
 
-    
+
         // Build visible scale
         this.head = document.createElement("div");
         this.shaft = document.createElement("div");
@@ -66,9 +66,10 @@ class Scale extends Block {
 
     // Update scale
     update(dt) {
-        // this.update_load();
-        console.log(this.loadTotal);
-        this.text = this.loadTotal;
+        if (!load_ready) {
+            return;
+        }
         super.update(dt);
+        this.text.innerHTML = this.loadTotal;
     }
 }
