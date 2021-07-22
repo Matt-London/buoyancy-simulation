@@ -14,9 +14,22 @@
     <script src="assets/Block.js" defer></script>
     <script src="assets/Scale.js" defer></script>
     <script src="assets/function.js" defer></script>
+    <script src="assets/options.js" defer></script>
     <script src="script.js" defer></script>
 </head>
 <body>
-    
+    <div id="form-container">
+        <p id="container-label">Options:</p>
+        <form id="form">
+            <input type="checkbox" id="visible-mass" name="visible-mass">
+            <label for="visible-mass"> Show mass</label><br>
+            <input type="checkbox" id="visible-weight" name="visible-weight">
+            <label for="visible-weight"> Show weight</label><br>
+            <input type="checkbox" id="visible-density" name="visible-density">
+            <label for="visible-density"> Show density</label><br>
+            <input type="checkbox" id="visible-volume" name="visible-volume">
+            <label for="visible-volume"> Show volume</label>
+        </form>
+    </div>
 </body>
 </html>
