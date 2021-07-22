@@ -1,5 +1,7 @@
+// 20 pixels = 1 cm
+
 let wood = new Block(100, 100, 100, 100, 2, 10, true, "images/wood.jpg", document.body, true, true, true, true);
-let wood2 = new Block(100, 100, 200, 100, 2, 10, true, "images/wood.jpg", document.body, true, true, true, true);
+let brick = new Block(100, 100, 200, 100, 2, 10, true, "images/brick.png", document.body, true, true, true, true);
 let base = new Block(50, window.innerWidth - 300, 150, window.innerHeight - 55, 1, 1, false, "#3CB043", document.body, true, false, false, false);
 base.div.className = "land";
 let left = new Block(200, (window.innerWidth - 300) / 4, 150, window.innerHeight - 305, 1, 1, false, "#3CB043", document.body, true, true, false, false);
@@ -13,13 +15,15 @@ water.div.className = "water";
 let scale = new Scale(75, 150, 300, 100, document.body);
 let scale2 = new Scale(75, 150, 400, 100, document.body);
 
-const blocks = [wood, wood2, base, water, left, right, scale, scale2];
-const divs = [wood.div, wood2.div, base.div, water.div, left.div, right.div, scale.div, scale2.div];
+const blocks = [wood, brick, base, water, left, right, scale, scale2];
+const divs = [wood.div, brick.div, base.div, water.div, left.div, right.div, scale.div, scale2.div];
 
 load_ready = true;
 
 // Main "game" loop
 setInterval(() => {
     update_blocks(time_elapsed());
+
+    grab_form();
 
 }, 20);
