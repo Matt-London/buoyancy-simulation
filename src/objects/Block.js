@@ -151,7 +151,7 @@ class Block {
     // Apply gravity by calculating change in position
     gravity(dt) {
         // Check if it is currently in collision
-        if (!this.is_clicked && this.bottom < window.innerHeight - 10) {
+        if (!this.is_clicked && this.bottom < this.parent.offsetHeight - 4) {
             // Calculate new velocity
             this.velocity += g * dt;
             // Calculate new position
@@ -159,6 +159,11 @@ class Block {
 
             this.div.style.top = (this.top - dy) + "px";
 
+        }
+
+        else if (this.bottom > this.parent.offsetHeight) {
+            this.div.style.top = this.parent.offsetHeight - this.height - 4 + "px";
+            this.velocity = 0;
         }
 
         else {
