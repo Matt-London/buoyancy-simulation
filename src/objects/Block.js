@@ -71,29 +71,23 @@ class Block {
     // ====================== Setters ======================
     set_height(h) {
         this.height = h;
-        this.update();
     }
     set_width(w) {
         this.width = w;
-        this.update();
     }
     set_weight(w) {
         this.weight = w;
-        this.update();
     }
     set_color(c) {
         if (!this.image) {
             this.color = c;
         }
-        this.update();
     }
     set_left(l) {
-        this.left = l;
-        this.update();
+        this.div.style.left = l + "px";
     }
     set_top(t) {
-        this.top = t;
-        this.update();
+        this.div.style.top = t + "px";
     }
 
     // Updates position and what-not
@@ -115,7 +109,6 @@ class Block {
         this.update_weight();
 
         this.update_visible();
-
         
     }
 
