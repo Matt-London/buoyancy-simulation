@@ -53,7 +53,10 @@ class Scene {
         let side = cmSide * this.cmLength;
 
         if (scale) {
-            this.add_base(new Scale(75, 150, x, y, parent), x, y);
+            let sWidth = this.width / 13;
+            let sHeight = sWidth / 2;
+
+            this.add_base(new Scale(sHeight, sWidth, x, y, parent), x, y);
         }
         else {
             this.add_base(new Block(side, side, x, y, mass, volume, image, color, parent, true, true, true, true), x, y);
