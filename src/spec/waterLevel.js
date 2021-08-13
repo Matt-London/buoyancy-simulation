@@ -6,4 +6,6 @@ function update_leveler(water) {
 
     leveler.style.left = water.right + "px";
     text.innerHTML = (water.totalVolume + water.minVolume).toFixed(2) + " L";
+    // text.innerHTML = "Nadia is so cute";
+
 }
