@@ -26,6 +26,8 @@ class Scene {
         let water = new Water(this.landHeight - 5, this.width / 2, left.right, this.height - base.height + 1, this.stage);
         water.div.className = "water";
 
+        this.water_element = water;
+
         // Make public
         this.base = base;
         this.left = left;
